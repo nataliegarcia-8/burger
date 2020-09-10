@@ -4,9 +4,9 @@
 
 <ul>
   {{#each burgers}}
-    {{#unless devoured}}
-      {{> devoured/ devoured=true}}
-    {{/unless}}
+  {{#if devoured}}
+  {{> burger}}
+  {{/if}}
   {{/each}}
 </ul>
 
@@ -14,9 +14,9 @@
 
 <ul>
   {{#each burgers}}
-    {{#if devoured}}
-      {{> burgers/ devoured=false}}
-    {{/if}}
+  {{#unless devoured}}
+  {{> burger}}
+  {{/unless}}
   {{/each}}
 </ul>
 
