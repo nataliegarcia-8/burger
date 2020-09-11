@@ -2,25 +2,17 @@
 const connection = require("./connection.js")
 
 const orm = {
-    all: function (table, callback) {
+    selectAll: function (table, callback) {
         const q = 'SELECT * FROM ??'
         const data = [table]
         connection.query(q, data, callback)
     },
-    findBy: function (table, condition, callback) {
-        const q = 'SELECT * FROM ?? WHERE ' + condition;
-        const data = [table]
-        connection.query(q, data, callback)
-    },
-    selectAll: (whatToSelect, table, orderCol) => {
-        const queryString = "SELECT ?? FROM ?? ORDER BY ?? DESC";
-        console.log(queryString);
-        connection.query(queryString, [whatToSelect, table, orderCol], (err, result) => {
-            if (err) throw err;
-            console.log(result);
-        });
-    },
-    insertOne: (table, objValues, callback) => {
+   
+    insertOne: (new_burger, callback) => {
+        const q = "INSERT INTO burgers (burger_name, devoured) VALUES (?, false)";
+        connection.query(q, [new_burger], callback)
+        },
+    // insertOne: (table, objValues, callback) => {
         /*
         var objValues = {
             burger_name: 'Cheeseburger',
@@ -32,21 +24,21 @@ const orm = {
         ['burger_name', 'devoured'].map(x => '?') === ['?', '?']
         ['?', '?'].toString() === '?,?'
         */
-        const q = 'INSERT INTO ?? \
-                    ('+ Object.keys(objValues).toString() + ') \
-                    VALUES ('+ Object.keys(objValues).map(x => '?').toString() + ')'
+        // const q = 'INSERT INTO ?? \
+        //             ('+ Object.keys(objValues).toString() + ') \
+        //             VALUES ('+ Object.keys(objValues).map(x => '?').toString() + ')'
 
         /*
         q = 'INSERT INTO ?? (burger_name, devoured) VALUES (?,?)
         data = ['burgers'].concat(['Cheeseburger', 0])
         data = ['burgers', 'Cheeseburger', 0)
         */
-        const data = [table].concat(Object.values(objValues))
-        connection.query(q, data, callback)
-    },
-    updateOne: () => {
-
-    },
+        // const data = [table].concat(Object.values(objValues))
+        // connection.query(q, data, callback)
+    updateOne: (id, callback) => {
+        const q = 'UPDATE burgers SET devoured = true WHERE id = ?'
+        connection.query(q, [id], callback)
+    }
 }
 
 module.exports = orm;

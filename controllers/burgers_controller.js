@@ -1,46 +1,13 @@
 const router = require("express").Router();
-
 //importing model to use database functions
-const burger = require("../models/burger.js")
+const burger = require("../models/burger.js");
 
-const connection = require('../config/connection')
-const orm = require('../config/orm')
+// const connection = require('../config/connection')
+// const orm = require('../config/orm')
 
-//GET route
+//GET route main page
 router.get("/", (req, res) => {
-  // burger.all(function (err, result) {
-  //   if (err) throw err;
-  //   console.log(result)
-  //   res.render("index", { burgers: result })
-  // })
-  burger.find({})
-    .then(function (result) {
-      console.log(result)
-      res.render("index", { burgers: result })
-    })
-    .catch(function (err) {
-      if (err) throw err;
-    })
-});
-
-router.get("/id/:id", (req, res) => {
-  // burger.findById(req.params.id, function (err, result) {
-  //   if (err) throw err;
-  //   console.log(result)
-  //   res.render("index", { burgers: result })
-  // })
-  burger.find({ id: req.params.id })
-    .then(function (result) {
-      console.log(result)
-      res.render("index", { burgers: result })
-    })
-    .catch(function (err) {
-      if (err) throw err;
-    })
-});
-
-router.get("/name/:burger_name", (req, res) => {
-  burger.findByName(req.params.burger_name, function (err, result) {
+  burger.selectAll (function(err, result) {
     if (err) throw err;
     console.log(result)
     res.render("index", { burgers: result })
@@ -49,15 +16,25 @@ router.get("/name/:burger_name", (req, res) => {
 
 //POST route
 router.post("/api/burgers", (req, res) => {
-  burger.create([
-    "burger_name", "devoured"
-  ], [
-    req.body.burger_name, req.body.devoured
-  ], (result) => {
-    // Send back the ID of the new quote
-    res.json({ id: result.insertId });
-  });
+  // burger.insertOne([
+  //   "burger_name", "devoured"
+  // ], [
+  //   req.body.burger_name, req.body.devoured
+  // ], (result) => {
+  //   // Send back the ID of the new quote
+  //   res.json({ id: result.insertId });
+  // });
+  burger.insertOne(req.body.new_burger, function(data) {
+    console.log(data);
+    res.redirect("/")
+  })
 });
+// UPDATE
+router.put("/api/burgers/:id", (req, res) => {
+  burger.updateOne(req.params.id, function(data){
+    console.log(data);
+    res.redirect("/")
+  })});
 
 
-module.exports = router
+module.exports = router;
