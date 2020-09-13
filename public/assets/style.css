@@ -1,13 +1,30 @@
-body {
+.jumbotron {
     background-color: antiquewhite;
 }
 
+body {
+    background-image: url(burger.jpg)
+}
 h2 {
     color: tan;
     font-size: 20px;
 }
 
 ul {
-    background-color: teal;
-    color: antiquewhite;
+    color: black;
+}
+.list {
+text-align: center;
+background-color: purple;
+margin: 20px;
+}
+form {
+    margin: 30px;
+    padding: 10px;
+    background-color: antiquewhite;
+    text-align: center;
+
+}
+button {
+    background-color: purple;
 }

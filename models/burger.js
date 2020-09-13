@@ -11,7 +11,7 @@ const burger = {
     updateOne: function(id, cb) {
         orm.updateOne(id, cb)
     }
-}
+};
 
 //export the databse functions for the controller
 module.exports = burger;

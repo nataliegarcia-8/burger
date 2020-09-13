@@ -1,36 +1,46 @@
+{{!-- Header Section--}}
 <div class="jumbotron d-flex justify-content-center">
-<h1>Burgers!</h1>
+<h1>Burger List</h1>
 </div>
+{{!-- Container --}}
 <div class="container">
 <div class="row">
-  <div class="col-6">
+{{!-- undevoured burger list section  --}}
+  <div class="col-5 list">
 <h2>Burgers to be devoured!</h2>
-<ul>
+<ul class="list-group list-group-flush">
   {{#each burgers}}
-  {{#unless devoured}}
-  {{> burger}}
-  <button id={{id}} type="button" class="btn btn-outline-primary">Devour me!</button>
+  {{#unless this.devoured}}
+  <li class="list-group-item">
+  {{burger_name}}
+  <button id={{id}} type="button" class="btn btn-outline-primary devour">Devour me!</button>
+  </li>
   {{/unless}}
   {{/each}}
 </ul>
 </div>
-</div>
-  <div class="col-6">
+{{!-- undevoured burger list section  --}}
+  <div class="col-5 list">
 <h2>Burgers I devoured!</h2>
-<ul>
+<ul class="list-group list-group-flush">
   {{#each burgers}}
-  {{#if devoured}}
-  {{> burger}}
+  {{#if this.devoured}}
+   <li class="list-group-item">
+  {{burger_name}}
+  </li>
   {{/if}}
   {{/each}}
 </ul>
 </div>
+</div>
+{{!-- Burger Form --}}
 <div class="row">
 <div class="col d-flex justify-content-center">
 <form action="/api/burgers" method="post">
-<h2>Add A BURGER</h2>
+<h2>ADD A BURGER</h2>
   <div class="form-group">
     <label for="new_burger">Burger Name:</label>
+    <br>
     <input type="text" id="new_burger" name="new_burger">
   </div>
   <button type="submit">Add Burger</button>
@@ -38,3 +48,12 @@
 </div>
 </div>
 </div>
+<script>
+  $("button").click(function (event) {
+    const id = event.target.id;
+    $.ajax({
+      url: `/api/burgers/${id}`,
+      method: "PUT"
+    }).then(location.reload())
+  })
+</script>
