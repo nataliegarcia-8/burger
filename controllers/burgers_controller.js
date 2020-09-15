@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
   burger.selectAll (function(err, result) {
     if (err) throw err;
     console.log(result)
-    res.render("index", { allBurgers: result })
+    res.render("index", { burgers: result })
   })
 });
 
