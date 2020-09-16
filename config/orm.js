@@ -8,7 +8,7 @@ const orm = {
         connection.query(q, data, callback)
     },
     insertOne: (new_burger, callback) => {
-        const q = "INSERT INTO burgers (new_burger, devoured) VALUES (?, false)";
+        const q = "INSERT INTO burgers (burger_name, devoured) VALUES (?, false)";
         connection.query(q, [new_burger], callback)
         },
     updateOne: function(id, callback) {
